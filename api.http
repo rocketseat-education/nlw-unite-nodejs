@@ -1,0 +1,33 @@
+POST http://localhost:3333/events
+Content-Type: application/json
+
+{
+  "title": 123,
+  "details": null,
+  "maximumAttendees": 1
+}
+
+###
+
+POST http://localhost:3333/events/81a3f6db-45bf-4a6f-b10c-bcaf8837ac43/attendees
+Content-Type: application/json
+
+{
+  "name": "Diego Fernandes",
+  "email": "diego2@rocketseat.com.br"
+}
+
+###
+
+GET http://localhost:3333/events/81a3f6db-45bf-4a6f-b10c-bcaf8837ac43
+
+###
+
+GET http://localhost:3333/attendees/3/badge
+###
+
+GET http://localhost:3333/attendees/4/check-in
+
+###
+
+GET http://localhost:3333/events/81a3f6db-45bf-4a6f-b10c-bcaf8837ac43/attendees?query=diego

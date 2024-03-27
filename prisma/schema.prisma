@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id               String  @id @default(uuid())
+  title            String
+  details          String?
+  slug             String  @unique
+  maximumAttendees Int?    @map("maximum_attendees")
+
+  attendees Attendee[]
+
+  @@map("events")
+}
+
+model Attendee {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  createdAt DateTime @default(now()) @map("created_at")
+  eventId   String   @map("event_id")
+
+  event   Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  checkIn CheckIn?
+
+  @@unique([eventId, email])
+  @@map("attendees")
+}
+
+model CheckIn {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  attendee   Attendee @relation(fields: [attendeeId], references: [id], onDelete: Cascade)
+  attendeeId Int      @unique @map("attendee_id")
+
+  @@map("check_ins")
+}
