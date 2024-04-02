@@ -4,7 +4,11 @@
   "description": "O pass.in é uma aplicação de **gestão de participantes em eventos presenciais**.",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch --env-file .env src/server.ts"
+    "start": "node dist/server.mjs",
+    "build": "tsup src --format esm",
+    "dev": "tsx watch --env-file .env src/server.ts",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +19,7 @@
   "devDependencies": {
     "@types/node": "20.11.30",
     "prisma": "5.11.0",
+    "tsup": "8.0.2",
     "tsx": "4.7.1",
     "typescript": "5.4.3"
   },
