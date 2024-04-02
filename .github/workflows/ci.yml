@@ -27,7 +27,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
-          pasword: ${{ secrets.DOCKERHUB_SECRET }}
+          password: ${{ secrets.DOCKERHUB_SECRET }}
 
       - name: Push image
         run: |
