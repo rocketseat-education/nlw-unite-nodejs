@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    name: 'Build and Push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Generate sha
+        id: generate_sha
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Build docker image
+        run: docker build -t thalesmorato/nlw-service-passin:${{ steps.generate_sha.outputs.sha }} .
