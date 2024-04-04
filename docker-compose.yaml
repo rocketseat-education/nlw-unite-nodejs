@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  api-passin:
+    build:
+      context: .
+    container_name: api-passin
+    ports:
+      - 3001:3333
+    environment:
+      - DATABASE_URL=file:./db.sqlite
+      - API_BASE_URL=http://localhost:3333
+      - PORT=3333
