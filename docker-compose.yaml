@@ -1,13 +1,39 @@
 version: '3.7'
 
 services:
+  postgres:
+    image: postgres:16.2-alpine3.19
+    container_name: db-passin
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=passin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - passin
+
   api-passin:
     build:
       context: .
     container_name: api-passin
     ports:
-      - 3001:3333
+      - "3001:3333"
     environment:
-      - DATABASE_URL=file:./db.sqlite
+      - DATABASE_URL=postgresql://admin:admin@postgres:5432/passin
       - API_BASE_URL=http://localhost:3333
       - PORT=3333
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - passin
+
+networks:
+  passin:
+    driver: bridge
